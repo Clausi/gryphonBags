@@ -28,6 +28,13 @@ file only adds what is specific to GryphonBags.
 
 `GryphonBagsDB` (account-wide) and `GryphonBagsCharDB` (per character).
 
+## Reserved slots
+
+`C_Container.SortBags()` takes no arguments and only has per-bag exclusions. With an item locked by
+`C_Item.LockItem` before or right after the call, nothing gets sorted at all on Forever (seen
+in-game), not only the locked item stays in place. So `Modules/ReservedSlots.lua` lets the sort run
+and then moves the content of the reserved slots back.
+
 ## Commit scopes
 
-`options`, `core`, `locales`, `toc`.
+`reserved-slots`, `options`, `core`, `locales`, `toc`.

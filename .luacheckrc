@@ -17,17 +17,39 @@ globals = {
 -- WoW API and Blizzard UI globals the addon reads. Add new ones here when used.
 read_globals = {
     -- WoW Lua extensions
+    "bit",
     "strtrim",
+    "hooksecurefunc",
+    "wipe",
 
     -- API
     "C_AddOns",
+    "C_Container",
+    "C_Item",
+    "C_Timer",
+    "ClearCursor",
     "CreateFrame",
+    "CursorHasItem",
+    "Enum",
     "GetAddOnMemoryUsage",
     "GetLocale",
     "InCombatLockdown",
+    "IsAltKeyDown",
+    "ItemLocation",
     "Settings",
     "UpdateAddOnMemoryUsage",
 
+    -- UI helpers
+    "ContainerFrameUtil_EnumerateContainerFrames",
+    "GameTooltip_AddNormalLine",
+
     -- Frames
+    "BagItemAutoSortButton",
+    "ContainerFrameCombinedBags",
     "DEFAULT_CHAT_FRAME",
+    "GameTooltip",
+    "SendMailFrame",
+
+    -- Constants and global strings
+    "NUM_TOTAL_BAG_FRAMES",
 }

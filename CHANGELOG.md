@@ -14,3 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Localization with English base locale, German and French translation.
 - Options page in the game settings (Esc > Options > AddOns > GryphonBags) for the automatic
   messages, also opened with `/gryphonbags options`.
+- Reserved bag slots: Alt-right-click a slot to mark it with a lock. After "Clean Up Bags", the
+  slot gets its item back, and a reserved empty slot is empty again. Stored per character.
+  `/gryphonbags reserved` shows the number of reserved slots, `/gryphonbags reserved clear` frees
+  them all.

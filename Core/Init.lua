@@ -15,6 +15,9 @@ ns.defaults = {
 ns.charDefaults = {
     -- Automatic messages (login, hints). Change with "/gryphonbags notify on|off".
     notifications = true,
+    -- Bag slots whose content is put back after "Clean Up Bags": reservedSlots[bagID][slot] = true.
+    -- Filled by Modules/ReservedSlots.lua.
+    reservedSlots = {},
 }
 
 -- Registers a module. A module may implement:

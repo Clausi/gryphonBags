@@ -4,6 +4,8 @@ A World of Warcraft addon that extends the default bags with additional options.
 
 ## Features
 
+- **Reserved bag slots:** Alt-right-click a bag slot to mark it with a lock. After "Clean Up Bags",
+  the slot gets its item back, and a reserved empty slot is empty again. Stored per character.
 - **Options:** automatic messages, on an own page in the game options
   (Esc > Options > AddOns > GryphonBags).
 
@@ -57,6 +59,7 @@ GryphonBags/
 │   ├── Util.lua           # Print/Debug helpers, debug memory output, defaults
 │   └── Main.lua           # Bootstrap: saved variables, module lifecycle, slash commands
 └── Modules/
+    ├── ReservedSlots.lua  # Bag slots whose content is put back after "Clean Up Bags"
     └── Options.lua        # Options page in the game settings ("/gryphonbags options")
 ```
 
@@ -93,6 +96,8 @@ Lint with [luacheck](https://github.com/lunarmodules/luacheck). Place `luacheck.
 - `/gryphonbags` – help
 - `/gryphonbags version` – show version
 - `/gryphonbags options` – open the options page
+- `/gryphonbags reserved` – show the number of reserved bag slots
+- `/gryphonbags reserved clear` – free all reserved bag slots of the current character
 - `/gryphonbags notify on|off` – automatic messages of the current character, default on
 - `/gryphonbags debug` – toggle debug output (after a `/reload`, also the memory each module keeps)
 

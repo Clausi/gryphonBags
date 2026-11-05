@@ -23,6 +23,7 @@ Core\Init.lua
 Core\Util.lua
 
 # Modules
+Modules\ReservedSlots.lua
 Modules\Options.lua
 
 # Bootstrap (must be loaded last)

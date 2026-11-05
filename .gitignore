@@ -1,0 +1,8 @@
+# Local tooling (luacheck.exe etc.)
+.tools/
+
+# Local media (screenshots, logos)
+.media/
+
+# Local Claude Code instructions (deploy scripts etc.)
+CLAUDE.local.md

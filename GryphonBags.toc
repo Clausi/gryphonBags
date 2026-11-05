@@ -1,0 +1,29 @@
+## Interface: 16001
+## Title: GryphonBags
+## Notes: Extends the default bags with additional options.
+## Notes-deDE: Erweitert die Standard-Taschen um zusätzliche Optionen.
+## Notes-frFR: Ajoute des options supplémentaires aux sacs standard.
+## Category: Inventory
+## Author: cklausl
+## Version: 0.1.0
+## SavedVariables: GryphonBagsDB
+## SavedVariablesPerCharacter: GryphonBagsCharDB
+## IconTexture: Interface\Icons\INV_Misc_Bag_08
+## X-Category: Inventory
+## X-License: MIT
+## X-Website: https://github.com/Clausi/gryphonBags
+
+# Localization (enUS must be loaded first, it is the fallback)
+Locales\enUS.lua
+Locales\deDE.lua
+Locales\frFR.lua
+
+# Core
+Core\Init.lua
+Core\Util.lua
+
+# Modules
+Modules\Options.lua
+
+# Bootstrap (must be loaded last)
+Core\Main.lua

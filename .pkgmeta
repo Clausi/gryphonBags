@@ -1,0 +1,13 @@
+package-as: GryphonBags
+
+# Uploaded as the release notes on CurseForge, Wago Addons and GitHub.
+manual-changelog:
+  filename: CHANGELOG.md
+  markup-type: markdown
+
+# Development files that are not part of the addon. Dotfiles (.github, .luacheckrc, ...) are
+# ignored by the packager anyway.
+ignore:
+  - CLAUDE.md
+  - README.md
+  - docs

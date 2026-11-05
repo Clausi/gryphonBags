@@ -1,0 +1,24 @@
+local _, ns = ...
+
+if GetLocale() ~= "frFR" then
+    return
+end
+
+local L = ns.L
+
+L["ADDON_LOADED"] = "Version %s chargée. Tapez /gryphonbags pour l'aide."
+L["DEBUG_ON"] = "Sortie de débogage activée."
+L["DEBUG_OFF"] = "Sortie de débogage désactivée."
+L["HELP_HEADER"] = "Commandes :"
+L["HELP_VERSION"] = "/gryphonbags version - affiche la version de l'addon"
+L["HELP_DEBUG"] = "/gryphonbags debug - active ou désactive la sortie de débogage"
+L["HELP_NOTIFY"] = "/gryphonbags notify on||off - messages automatiques (connexion, conseils)"
+L["HELP_OPTIONS"] = "/gryphonbags options - ouvre les options"
+L["NOTIFY_ON"] = "Les messages automatiques sont activés pour ce personnage."
+L["NOTIFY_OFF"] = "Les messages automatiques sont désactivés pour ce personnage. "
+    .. "Les réponses aux commandes restent affichées."
+L["OPTIONS_IN_COMBAT"] = "Les options ne peuvent pas être ouvertes par commande en combat. Utilisez "
+    .. "Échap > Options > AddOns ou réessayez après le combat."
+L["OPTIONS_NOTIFICATIONS"] = "Messages automatiques"
+L["OPTIONS_NOTIFICATIONS_TOOLTIP"] = "Messages que l'addon affiche de lui-même : à la connexion et conseils. "
+    .. "Les réponses aux commandes s'affichent toujours. Pour ce personnage."

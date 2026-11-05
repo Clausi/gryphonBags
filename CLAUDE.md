@@ -1,0 +1,33 @@
+# GryphonBags
+
+World of Warcraft addon that extends the default bags with additional options.
+
+**Load the `wow-lua` skill (`.claude/skills/wow-lua/`) before working on code.** It holds the rules
+shared by all WoW addons (luacheck, locales, addon structure, Blizzard UI, secret values, names,
+compatibility, changelog). The git workflow and commit messages are in the global `CLAUDE.md`. This
+file only adds what is specific to GryphonBags.
+
+## Target clients
+
+- **Forever** only (`## Interface: 16001`, `forever` branch of wow-ui-source), so there is no
+  compatibility layer and there are no client checks. Retail may follow later: `Core/Compat.lua` is
+  added then (take the structure from GryphonMail), together with `120105` in the `.toc`. Forever
+  differs from Retail in many places.
+- Bag code on Forever: `Blizzard_UIPanels_Game/Mainline/ContainerFrame.lua` and `.xml`, plus the
+  small overrides in `Blizzard_UIPanels_Game/Camelot/ContainerFrame.lua`. Bag buttons:
+  `Blizzard_MainMenuBarBagButtons/` (`Shared/`, `Camelot/`). The `Camelot` folders only exist on the
+  `forever` branch, so a checkout of `live` does not show them.
+- `Core/Names.lua` does not exist yet. When a feature needs names, take over `Core/Names.lua` and
+  `Compat.HasRealmNames()` from GryphonMail.
+
+## Locales
+
+`enUS` (base), `deDE`, `frFR`.
+
+## Saved variables
+
+`GryphonBagsDB` (account-wide) and `GryphonBagsCharDB` (per character).
+
+## Commit scopes
+
+`options`, `core`, `locales`, `toc`.

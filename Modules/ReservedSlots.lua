@@ -11,6 +11,9 @@ local ReservedSlots = ns:RegisterModule("ReservedSlots")
 --   merged the stack, another stack of the same item is taken.
 -- - A slot that was empty is emptied again, as long as there is a free slot for the item.
 -- - The "Clean Up Bags" entry of the gamepad menu has no button to hook and sorts everything.
+-- - A bar over the search box shows the progress. The sort has no known length, so the bar pulses
+--   until the restore starts counting the slots. The bar is a child of the search box, so it follows
+--   the box between the bag frames and closes with the bags, while the restore goes on.
 
 -- Seconds without a bag update after which the sort counts as finished. There is no event for it.
 local SORT_QUIET_DELAY = 1.5
@@ -24,16 +27,68 @@ local MARKER_TEXTURE = "Interface\\LFGFrame\\UI-LFG-ICON-LOCK"
 -- The lock fills 28 of the 32 pixels of the texture, as in Blizzard's own "|T...|t" strings.
 local MARKER_TEXCOORD = 28 / 32
 
+local PROGRESS_TEXTURE = "Interface\\TargetingFrame\\UI-StatusBar"
+local PROGRESS_PULSE_DURATION = 0.6
+local PROGRESS_PULSE_MIN_ALPHA = 0.35
+
 -- Marker texture per item button. Kept here to not write fields to Blizzard's buttons.
 local markers = {}
 local hookedFrames = {}
 
 -- Slots left to restore, items first (see NoteContent). nil while no restore is running.
 local pending
+-- Number of slots in the note, for the progress bar.
+local pendingTotal = 0
 -- True while waiting for the sort to finish, false while the restore moves items.
 local waitingForSort = false
 local attempts = 0
 local timer
+
+local progressBar, progressLabel, progressPulse
+
+local function CreateProgressBar()
+    progressBar = CreateFrame("StatusBar", nil, BagItemSearchBox)
+    progressBar:SetAllPoints()
+    progressBar:SetStatusBarTexture(PROGRESS_TEXTURE)
+    progressBar:SetStatusBarColor(0.2, 0.6, 1)
+    progressBar:Hide()
+
+    -- Opaque, so the text of the search box does not show through.
+    local background = progressBar:CreateTexture(nil, "BACKGROUND")
+    background:SetAllPoints()
+    background:SetColorTexture(0, 0, 0)
+
+    progressLabel = progressBar:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+    progressLabel:SetPoint("CENTER")
+
+    progressPulse = progressBar:GetStatusBarTexture():CreateAnimationGroup()
+    progressPulse:SetLooping("BOUNCE")
+    local fade = progressPulse:CreateAnimation("Alpha")
+    fade:SetFromAlpha(1)
+    fade:SetToAlpha(PROGRESS_PULSE_MIN_ALPHA)
+    fade:SetDuration(PROGRESS_PULSE_DURATION)
+end
+
+local function ShowSortProgress()
+    progressBar:SetMinMaxValues(0, 1)
+    progressBar:SetValue(1)
+    progressLabel:SetText(L["RESERVED_PROGRESS_SORTING"])
+    progressPulse:Play()
+    progressBar:Show()
+end
+
+local function ShowRestoreProgress()
+    local done = pendingTotal - #pending
+    progressPulse:Stop()
+    progressBar:SetMinMaxValues(0, pendingTotal)
+    progressBar:SetValue(done)
+    progressLabel:SetFormattedText(L["RESERVED_PROGRESS_RESTORING"], done, pendingTotal)
+end
+
+local function HideProgress()
+    progressPulse:Stop()
+    progressBar:Hide()
+end
 
 local function IsReservable(bagID)
     return bagID >= Enum.BagIndex.Backpack and bagID <= NUM_TOTAL_BAG_FRAMES
@@ -207,6 +262,7 @@ local function StopRestore()
     pending = nil
     waitingForSort = false
     attempts = 0
+    HideProgress()
 end
 
 local RestoreStep
@@ -223,6 +279,7 @@ end
 function RestoreStep()
     timer = nil
     waitingForSort = false
+    ShowRestoreProgress()
 
     attempts = attempts + 1
     if attempts > MAX_ATTEMPTS then
@@ -260,9 +317,11 @@ local function OnCleanUp()
             return
         end
         pending = content
+        pendingTotal = #content
     end
     waitingForSort = true
     attempts = 0
+    ShowSortProgress()
     ScheduleStep(SORT_QUIET_DELAY)
 end
 
@@ -285,6 +344,8 @@ function ReservedSlots:Clear()
 end
 
 function ReservedSlots:OnEnable()
+    CreateProgressBar()
+
     for _, frame in ContainerFrameUtil_EnumerateContainerFrames() do
         HookFrame(frame)
     end

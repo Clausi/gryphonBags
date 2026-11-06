@@ -45,6 +45,7 @@ read_globals = {
 
     -- Frames
     "BagItemAutoSortButton",
+    "BagItemSearchBox",
     "ContainerFrameCombinedBags",
     "DEFAULT_CHAT_FRAME",
     "GameTooltip",

@@ -18,3 +18,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   slot gets its item back, and a reserved empty slot is empty again. Stored per character.
   `/gryphonbags reserved` shows the number of reserved slots, `/gryphonbags reserved clear` frees
   them all.
+- Progress bar over the bag search box while "Clean Up Bags" runs with reserved slots: first the
+  sort, then the slots that are put back.

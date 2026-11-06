@@ -6,6 +6,7 @@ A World of Warcraft addon that extends the default bags with additional options.
 
 - **Reserved bag slots:** Alt-right-click a bag slot to mark it with a lock. After "Clean Up Bags",
   the slot gets its item back, and a reserved empty slot is empty again. Stored per character.
+  A small bar over the search box shows the progress of the sort and of putting the items back.
 - **Options:** automatic messages, on an own page in the game options
   (Esc > Options > AddOns > GryphonBags).
 

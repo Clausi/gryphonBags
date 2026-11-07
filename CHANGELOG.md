@@ -20,3 +20,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   them all.
 - Progress bar over the bag search box while "Clean Up Bags" runs with reserved slots: first the
   sort, then the slots that are put back.
+
+### Fixed
+
+- Error `ADDON_ACTION_FORBIDDEN` (`PurchaseBankTab`) when opening the bank with a free bank tab: the
+  addon no longer taints Blizzard's list of bag frames at login.

@@ -40,13 +40,13 @@ read_globals = {
     "UpdateAddOnMemoryUsage",
 
     -- UI helpers
-    "ContainerFrameUtil_EnumerateContainerFrames",
     "GameTooltip_AddNormalLine",
 
     -- Frames
     "BagItemAutoSortButton",
     "BagItemSearchBox",
     "ContainerFrameCombinedBags",
+    "ContainerFrameContainer",
     "DEFAULT_CHAT_FRAME",
     "GameTooltip",
     "SendMailFrame",

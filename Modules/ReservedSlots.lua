@@ -346,10 +346,12 @@ end
 function ReservedSlots:OnEnable()
     CreateProgressBar()
 
-    for _, frame in ContainerFrameUtil_EnumerateContainerFrames() do
+    -- Not with ContainerFrameUtil_EnumerateContainerFrames: its first call fills tables Blizzard's bag
+    -- code reads later, which would then be tainted. The bank opens the bags and then buys the free
+    -- first tab, and that protected call failed with ADDON_ACTION_FORBIDDEN.
+    for _, frame in ipairs(ContainerFrameContainer.ContainerFrames) do
         HookFrame(frame)
     end
-    -- Only part of the enumeration while combined bags are on.
     HookFrame(ContainerFrameCombinedBags)
 
     BagItemAutoSortButton:HookScript("PreClick", OnCleanUp)

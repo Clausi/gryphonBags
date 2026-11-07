@@ -9,6 +9,8 @@ ns.modules = {}
 -- Account-wide (GryphonBagsDB, ns.db): settings and data shared by all characters.
 ns.defaults = {
     debug = false,
+    -- Own characters, keyed by full name ("Name Surname"). Filled by Modules/Characters.lua.
+    characters = {},
 }
 
 -- Per character (GryphonBagsCharDB, ns.charDb): data and settings only the logged-in character needs.

@@ -9,16 +9,16 @@ file only adds what is specific to GryphonBags.
 
 ## Target clients
 
-- **Forever** only (`## Interface: 16001`, `forever` branch of wow-ui-source), so there is no
-  compatibility layer and there are no client checks. Retail may follow later: `Core/Compat.lua` is
-  added then (take the structure from GryphonMail), together with `120105` in the `.toc`. Forever
+- **Forever** only (`## Interface: 16001`, `forever` branch of wow-ui-source), so there are no client
+  checks. `Core/Compat.lua` only holds `HasRealmNames()` for `Core/Names.lua`. Retail may follow later:
+  extend `Core/Compat.lua` then (structure from GryphonMail), with `120105` in the `.toc`. Forever
   differs from Retail in many places.
 - Bag code on Forever: `Blizzard_UIPanels_Game/Mainline/ContainerFrame.lua` and `.xml`, plus the
   small overrides in `Blizzard_UIPanels_Game/Camelot/ContainerFrame.lua`. Bag buttons:
   `Blizzard_MainMenuBarBagButtons/` (`Shared/`, `Camelot/`). The `Camelot` folders only exist on the
   `forever` branch, so a checkout of `live` does not show them.
-- `Core/Names.lua` does not exist yet. When a feature needs names, take over `Core/Names.lua` and
-  `Compat.HasRealmNames()` from GryphonMail.
+- `Core/Names.lua` is the one from GryphonMail, unchanged. `Modules/Characters.lua` is a reduced
+  copy of GryphonMail's (no mail targets, plus the gold of each character).
 
 ## Locales
 
@@ -37,4 +37,4 @@ and then moves the content of the reserved slots back.
 
 ## Commit scopes
 
-`reserved-slots`, `options`, `core`, `locales`, `toc`.
+`reserved-slots`, `characters`, `gold-tooltip`, `options`, `core`, `locales`, `toc`.

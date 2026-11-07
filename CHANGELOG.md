@@ -20,6 +20,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   them all.
 - Progress bar over the bag search box while "Clean Up Bags" runs with reserved slots: first the
   sort, then the slots that are put back.
+- Known characters: recorded with their gold on login. `/gryphonbags chars` lists them,
+  `/gryphonbags chars remove <number|name>` or the options forget one.
 
 ### Fixed
 

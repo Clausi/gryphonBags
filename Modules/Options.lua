@@ -13,6 +13,49 @@ local function RegisterProxySetting(variable, varType, name, defaultValue, getVa
         getValue, setValue)
 end
 
+-- Known characters, like "/gryphonbags chars remove": a dropdown picks one, the button removes it.
+-- The selection is not saved; "" is no selection.
+local function RegisterCharacterRemoval()
+    local Characters = ns.modules.Characters
+    local layout = SettingsPanel:GetLayout(category)
+    layout:AddInitializer(CreateSettingsListSectionHeaderInitializer(L["OPTIONS_CHARACTERS_HEADER"]))
+
+    local selected = ""
+    local selection = RegisterProxySetting("REMOVE_CHARACTER", Settings.VarType.String, L["OPTIONS_CHARACTER"], "",
+        function()
+            return selected
+        end,
+        function(value)
+            selected = value
+        end)
+
+    -- Called each time the dropdown opens, so it lists the characters stored at that moment.
+    local function GetOptions()
+        local container = Settings.CreateControlTextContainer()
+        container:Add("", L["OPTIONS_CHARACTER_NONE"])
+        for _, character in ipairs(Characters:GetCharacters()) do
+            if not character.isCurrent then
+                container:Add(character.fullName, Characters:FormatCharacter(character))
+            end
+        end
+        return container:GetData()
+    end
+    Settings.CreateDropdown(category, selection, GetOptions, L["OPTIONS_CHARACTER_TOOLTIP"])
+
+    -- No search tags (addSearchTags = false): tags added from addon code taint the initializer, the
+    -- settings search reads them for every initializer and carries the taint on to the search results.
+    -- On Forever, showing a Discord row there then calls the protected C_Discord.IsUserOAuthed.
+    layout:AddInitializer(CreateSettingsButtonInitializer(L["OPTIONS_CHARACTER_REMOVE"],
+        L["OPTIONS_CHARACTER_REMOVE_BUTTON"], function()
+        if selected == "" then
+            return
+        end
+        Characters:Remove(selected)
+        -- Also clears a selection that was removed by command in the meantime.
+        selection:SetValue("")
+    end, nil, false))
+end
+
 local function RegisterSettings()
     local notifications = RegisterProxySetting("NOTIFICATIONS", Settings.VarType.Boolean,
         L["OPTIONS_NOTIFICATIONS"], ns.charDefaults.notifications,
@@ -23,6 +66,8 @@ local function RegisterSettings()
             ns.charDb.notifications = value
         end)
     Settings.CreateCheckbox(category, notifications, L["OPTIONS_NOTIFICATIONS_TOOLTIP"])
+
+    RegisterCharacterRemoval()
 end
 
 function Options:OnInitialize()

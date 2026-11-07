@@ -67,6 +67,16 @@ local function RegisterSettings()
         end)
     Settings.CreateCheckbox(category, notifications, L["OPTIONS_NOTIFICATIONS_TOOLTIP"])
 
+    local goldTooltip = RegisterProxySetting("GOLD_TOOLTIP", Settings.VarType.Boolean,
+        L["OPTIONS_GOLD_TOOLTIP"], ns.charDefaults.goldTooltip,
+        function()
+            return ns.charDb.goldTooltip
+        end,
+        function(value)
+            ns.charDb.goldTooltip = value
+        end)
+    Settings.CreateCheckbox(category, goldTooltip, L["OPTIONS_GOLD_TOOLTIP_TOOLTIP"])
+
     RegisterCharacterRemoval()
 end
 

@@ -7,9 +7,10 @@ A World of Warcraft addon that extends the default bags with additional options.
 - **Reserved bag slots:** Alt-right-click a bag slot to mark it with a lock. After "Clean Up Bags",
   the slot gets its item back, and a reserved empty slot is empty again. Stored per character.
   A small bar over the search box shows the progress of the sort and of putting the items back.
-- **Known characters:** recorded with their gold on login, and can be forgotten in the options or
-  with `/gryphonbags chars remove`.
-- **Options:** automatic messages, known characters, on an own page in the game options
+- **Gold tooltip:** hover over the gold display of the bags to see the gold of the known characters
+  of the same ruleset and faction, and the sum; hold Shift for all characters. Characters are
+  recorded on login, and can be forgotten in the options or with `/gryphonbags chars remove`.
+- **Options:** automatic messages, gold tooltip, known characters, on an own page in the game options
   (Esc > Options > AddOns > GryphonBags).
 
 ## Supported clients
@@ -65,6 +66,7 @@ GryphonBags/
 │   └── Main.lua           # Bootstrap: saved variables, module lifecycle, slash commands
 └── Modules/
     ├── Characters.lua     # Known characters of the account and their gold
+    ├── GoldTooltip.lua    # Tooltip on the gold display of the bags
     ├── ReservedSlots.lua  # Bag slots whose content is put back after "Clean Up Bags"
     └── Options.lua        # Options page in the game settings ("/gryphonbags options")
 ```

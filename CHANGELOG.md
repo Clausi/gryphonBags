@@ -20,6 +20,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   them all.
 - Progress bar over the bag search box while "Clean Up Bags" runs with reserved slots: first the
   sort, then the slots that are put back.
+- Gold tooltip: hovering over the gold display of the bags shows the gold of the known characters
+  of the same ruleset and faction, and the sum. Hold Shift to see all characters. Can be turned off
+  in the options, for each character.
 - Known characters: recorded with their gold on login. `/gryphonbags chars` lists them,
   `/gryphonbags chars remove <number|name>` or the options forget one.
 

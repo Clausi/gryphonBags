@@ -23,24 +23,37 @@ read_globals = {
     "wipe",
 
     -- API
+    "C_ClassColor",
     "C_AddOns",
     "C_Container",
     "C_Item",
     "C_Timer",
     "ClearCursor",
+    "Constants",
     "CreateFrame",
     "CursorHasItem",
     "Enum",
     "GetAddOnMemoryUsage",
     "GetLocale",
+    "GetMoney",
+    "GetNormalizedRealmName",
+    "GetRealmName",
     "InCombatLockdown",
+    "issecretvalue",
     "IsAltKeyDown",
     "ItemLocation",
+    "RegionalUniqueNamesEnabled",
     "Settings",
+    "UnitClass",
+    "UnitFactionGroup",
+    "UnitName",
     "UpdateAddOnMemoryUsage",
 
     -- UI helpers
+    "CreateSettingsButtonInitializer",
+    "CreateSettingsListSectionHeaderInitializer",
     "GameTooltip_AddNormalLine",
+    "GetMoneyString",
 
     -- Frames
     "BagItemAutoSortButton",
@@ -50,7 +63,9 @@ read_globals = {
     "DEFAULT_CHAT_FRAME",
     "GameTooltip",
     "SendMailFrame",
+    "SettingsPanel",
 
     -- Constants and global strings
+    "GRAY_FONT_COLOR",
     "NUM_TOTAL_BAG_FRAMES",
 }

@@ -20,9 +20,12 @@ Locales\frFR.lua
 
 # Core
 Core\Init.lua
+Core\Compat.lua
 Core\Util.lua
+Core\Names.lua
 
 # Modules
+Modules\Characters.lua
 Modules\ReservedSlots.lua
 Modules\Options.lua
 

@@ -7,7 +7,9 @@ A World of Warcraft addon that extends the default bags with additional options.
 - **Reserved bag slots:** Alt-right-click a bag slot to mark it with a lock. After "Clean Up Bags",
   the slot gets its item back, and a reserved empty slot is empty again. Stored per character.
   A small bar over the search box shows the progress of the sort and of putting the items back.
-- **Options:** automatic messages, on an own page in the game options
+- **Known characters:** recorded with their gold on login, and can be forgotten in the options or
+  with `/gryphonbags chars remove`.
+- **Options:** automatic messages, known characters, on an own page in the game options
   (Esc > Options > AddOns > GryphonBags).
 
 ## Supported clients
@@ -57,9 +59,12 @@ GryphonBags/
 │   └── frFR.lua           # French translation
 ├── Core/
 │   ├── Init.lua           # Namespace, module registry, event dispatcher
+│   ├── Compat.lua         # Client check for Names.lua
 │   ├── Util.lua           # Print/Debug helpers, debug memory output, defaults
+│   ├── Names.lua          # Character names (same as GryphonMail)
 │   └── Main.lua           # Bootstrap: saved variables, module lifecycle, slash commands
 └── Modules/
+    ├── Characters.lua     # Known characters of the account and their gold
     ├── ReservedSlots.lua  # Bag slots whose content is put back after "Clean Up Bags"
     └── Options.lua        # Options page in the game settings ("/gryphonbags options")
 ```
@@ -99,6 +104,8 @@ Lint with [luacheck](https://github.com/lunarmodules/luacheck). Place `luacheck.
 - `/gryphonbags options` – open the options page
 - `/gryphonbags reserved` – show the number of reserved bag slots
 - `/gryphonbags reserved clear` – free all reserved bag slots of the current character
+- `/gryphonbags chars` – list the known characters and their gold
+- `/gryphonbags chars remove <number|name>` – forget a character
 - `/gryphonbags notify on|off` – automatic messages of the current character, default on
 - `/gryphonbags debug` – toggle debug output (after a `/reload`, also the memory each module keeps)
 

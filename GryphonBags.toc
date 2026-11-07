@@ -26,6 +26,7 @@ Core\Names.lua
 
 # Modules
 Modules\Characters.lua
+Modules\GoldTooltip.lua
 Modules\ReservedSlots.lua
 Modules\Options.lua
 

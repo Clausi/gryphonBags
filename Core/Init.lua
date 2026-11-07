@@ -17,6 +17,9 @@ ns.defaults = {
 ns.charDefaults = {
     -- Automatic messages (login, hints). Change with "/gryphonbags notify on|off".
     notifications = true,
+    -- Tooltip on the gold display of the bags (Modules/GoldTooltip.lua). The gold itself is in
+    -- ns.db.characters.
+    goldTooltip = true,
     -- Bag slots whose content is put back after "Clean Up Bags": reservedSlots[bagID][slot] = true.
     -- Filled by Modules/ReservedSlots.lua.
     reservedSlots = {},

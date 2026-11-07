@@ -41,6 +41,7 @@ read_globals = {
     "InCombatLockdown",
     "issecretvalue",
     "IsAltKeyDown",
+    "IsShiftKeyDown",
     "ItemLocation",
     "RegionalUniqueNamesEnabled",
     "Settings",
@@ -58,6 +59,7 @@ read_globals = {
     -- Frames
     "BagItemAutoSortButton",
     "BagItemSearchBox",
+    "ContainerFrame1",
     "ContainerFrameCombinedBags",
     "ContainerFrameContainer",
     "DEFAULT_CHAT_FRAME",
@@ -67,5 +69,6 @@ read_globals = {
 
     -- Constants and global strings
     "GRAY_FONT_COLOR",
+    "HIGHLIGHT_FONT_COLOR",
     "NUM_TOTAL_BAG_FRAMES",
 }

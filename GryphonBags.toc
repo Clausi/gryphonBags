@@ -22,6 +22,7 @@ Locales\frFR.lua
 Core\Init.lua
 Core\Compat.lua
 Core\Util.lua
+Core\Progress.lua
 Core\Names.lua
 
 # Modules

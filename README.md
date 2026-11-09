@@ -62,6 +62,7 @@ GryphonBags/
 │   ├── Init.lua           # Namespace, module registry, event dispatcher
 │   ├── Compat.lua         # Client check for Names.lua
 │   ├── Util.lua           # Print/Debug helpers, debug memory output, defaults
+│   ├── Progress.lua       # Progress bar over the bag search box
 │   ├── Names.lua          # Character names (same as GryphonMail)
 │   └── Main.lua           # Bootstrap: saved variables, module lifecycle, slash commands
 └── Modules/

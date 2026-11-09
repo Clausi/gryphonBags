@@ -13,6 +13,8 @@ local ReservedSlots = ns:RegisterModule("ReservedSlots")
 -- - The "Clean Up Bags" entry of the gamepad menu has no button to hook and sorts everything.
 -- - A bar over the search box (Core/Progress.lua) shows the progress. The sort has no known length,
 --   so the bar pulses until the restore starts counting the slots.
+-- - With the own sort (Modules/Sort.lua) turned on, the sort leaves the reserved slots alone and
+--   nothing needs to be restored.
 
 -- Seconds without a bag update after which the sort counts as finished. There is no event for it.
 local SORT_QUIET_DELAY = 1.5
@@ -281,6 +283,10 @@ local function OnCleanUp()
     attempts = 0
     ShowSortProgress()
     ScheduleStep(SORT_QUIET_DELAY)
+end
+
+function ReservedSlots:IsReserved(bagID, slot)
+    return IsReserved(bagID, slot)
 end
 
 function ReservedSlots:GetCount()

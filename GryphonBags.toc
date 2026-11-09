@@ -29,6 +29,7 @@ Core\Names.lua
 Modules\Characters.lua
 Modules\GoldTooltip.lua
 Modules\ReservedSlots.lua
+Modules\Sort.lua
 Modules\Options.lua
 
 # Bootstrap (must be loaded last)

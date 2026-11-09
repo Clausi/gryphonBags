@@ -37,4 +37,4 @@ and then moves the content of the reserved slots back.
 
 ## Commit scopes
 
-`reserved-slots`, `characters`, `gold-tooltip`, `options`, `core`, `locales`, `toc`.
+`reserved-slots`, `sort`, `characters`, `gold-tooltip`, `options`, `core`, `locales`, `toc`.

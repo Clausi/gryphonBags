@@ -77,6 +77,23 @@ local function RegisterSettings()
         end)
     Settings.CreateCheckbox(category, goldTooltip, L["OPTIONS_GOLD_TOOLTIP_TOOLTIP"])
 
+    local goldTooltipSort = RegisterProxySetting("GOLD_TOOLTIP_SORT", Settings.VarType.String,
+        L["OPTIONS_GOLD_TOOLTIP_SORT"], ns.charDefaults.goldTooltipSort,
+        function()
+            return ns.charDb.goldTooltipSort
+        end,
+        function(value)
+            ns.charDb.goldTooltipSort = value
+        end)
+    local function GetSortOptions()
+        local container = Settings.CreateControlTextContainer()
+        for _, order in ipairs(ns.modules.GoldTooltip.SORT_ORDERS) do
+            container:Add(order.key, L[order.label])
+        end
+        return container:GetData()
+    end
+    Settings.CreateDropdown(category, goldTooltipSort, GetSortOptions, L["OPTIONS_GOLD_TOOLTIP_SORT_TOOLTIP"])
+
     RegisterCharacterRemoval()
 end
 

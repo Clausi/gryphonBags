@@ -13,11 +13,39 @@ local COIN_BUTTONS = { "GoldButton", "SilverButton", "CopperButton" }
 -- Coin button under the mouse while the tooltip is shown, for redrawing it when Shift changes.
 local hoveredButton
 
+local function ByName(a, b)
+    return a.fullName < b.fullName
+end
+
 local function ByMoneyDescending(a, b)
     if a.money ~= b.money then
         return a.money > b.money
     end
-    return a.fullName < b.fullName
+    return ByName(a, b)
+end
+
+local function ByMoneyAscending(a, b)
+    if a.money ~= b.money then
+        return a.money < b.money
+    end
+    return ByName(a, b)
+end
+
+-- Sort orders, keyed by the value of ns.charDb.goldTooltipSort, in the order of the options dropdown.
+GoldTooltip.SORT_ORDERS = {
+    { key = "moneyDesc", label = "OPTIONS_GOLD_TOOLTIP_SORT_MONEY_DESC", compare = ByMoneyDescending },
+    { key = "moneyAsc", label = "OPTIONS_GOLD_TOOLTIP_SORT_MONEY_ASC", compare = ByMoneyAscending },
+    { key = "name", label = "OPTIONS_GOLD_TOOLTIP_SORT_NAME", compare = ByName },
+}
+
+-- Unknown saved values (e.g. from a later version) fall back to the first order.
+local function GetCompare()
+    for _, order in ipairs(GoldTooltip.SORT_ORDERS) do
+        if order.key == ns.charDb.goldTooltipSort then
+            return order.compare
+        end
+    end
+    return GoldTooltip.SORT_ORDERS[1].compare
 end
 
 local function ShowTooltip(button)
@@ -36,7 +64,7 @@ local function ShowTooltip(button)
 
     local Characters = ns.modules.Characters
     local characters = Characters:GetCharacters()
-    table.sort(characters, ByMoneyDescending)
+    table.sort(characters, GetCompare())
 
     local r, g, b = HIGHLIGHT_FONT_COLOR:GetRGB()
     local total = 0

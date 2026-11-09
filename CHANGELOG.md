@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Gold tooltip: the options choose the order of the characters (most gold first, least gold first
+  or by name), for each character.
+
 ## [0.1.0] - 2026-11-07
 
 ### Added

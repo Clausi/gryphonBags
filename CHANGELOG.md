@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Gold tooltip: the options choose the order of the characters (most gold first, least gold first
   or by name), for each character.
+- Own sort method for "Clean Up Bags", turned on in the options for each character: it only sorts
+  the slots that are not reserved, instead of Blizzard's sort followed by putting the reserved
+  slots back. It leaves out the bags Blizzard's cleanup ignores, puts items into the bags assigned
+  to their type first, and shows its progress over the search box.
 
 ### Fixed
 

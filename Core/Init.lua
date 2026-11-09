@@ -25,6 +25,9 @@ ns.charDefaults = {
     -- Bag slots whose content is put back after "Clean Up Bags": reservedSlots[bagID][slot] = true.
     -- Filled by Modules/ReservedSlots.lua.
     reservedSlots = {},
+    -- "Clean Up Bags" with the addon's own sort (Modules/Sort.lua), which leaves the reserved slots
+    -- alone, instead of Blizzard's sort.
+    ownSort = false,
 }
 
 -- Registers a module. A module may implement:

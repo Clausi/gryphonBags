@@ -67,6 +67,17 @@ local function RegisterSettings()
         end)
     Settings.CreateCheckbox(category, notifications, L["OPTIONS_NOTIFICATIONS_TOOLTIP"])
 
+    local ownSort = RegisterProxySetting("OWN_SORT", Settings.VarType.Boolean,
+        L["OPTIONS_OWN_SORT"], ns.charDefaults.ownSort,
+        function()
+            return ns.charDb.ownSort
+        end,
+        function(value)
+            ns.charDb.ownSort = value
+            ns.modules.Sort:Update()
+        end)
+    Settings.CreateCheckbox(category, ownSort, L["OPTIONS_OWN_SORT_TOOLTIP"])
+
     local goldTooltip = RegisterProxySetting("GOLD_TOOLTIP", Settings.VarType.Boolean,
         L["OPTIONS_GOLD_TOOLTIP"], ns.charDefaults.goldTooltip,
         function()

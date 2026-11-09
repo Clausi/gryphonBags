@@ -34,6 +34,7 @@ read_globals = {
     "CursorHasItem",
     "Enum",
     "GetAddOnMemoryUsage",
+    "GetInventoryItemID",
     "GetLocale",
     "GetMoney",
     "GetNormalizedRealmName",
@@ -41,7 +42,9 @@ read_globals = {
     "InCombatLockdown",
     "issecretvalue",
     "IsAltKeyDown",
+    "IsInventoryItemProfessionBag",
     "IsShiftKeyDown",
+    "PlaySound",
     "ItemLocation",
     "RegionalUniqueNamesEnabled",
     "Settings",
@@ -54,6 +57,8 @@ read_globals = {
     "CreateSettingsButtonInitializer",
     "CreateSettingsListSectionHeaderInitializer",
     "GameTooltip_AddNormalLine",
+    "GameTooltip_Hide",
+    "GameTooltip_SetTitle",
     "GetMoneyString",
 
     -- Frames
@@ -70,5 +75,9 @@ read_globals = {
     -- Constants and global strings
     "GRAY_FONT_COLOR",
     "HIGHLIGHT_FONT_COLOR",
+    "BAG_CLEANUP_BAGS",
+    "BAG_CLEANUP_BAGS_DESCRIPTION",
+    "NUM_BAG_FRAMES",
     "NUM_TOTAL_BAG_FRAMES",
+    "SOUNDKIT",
 }

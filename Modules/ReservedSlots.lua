@@ -166,7 +166,7 @@ end
 
 -- A free slot outside the reserved ones in a bag that can hold the item.
 local function FindFreeSlot(itemID)
-    local itemFamily = C_Item.GetItemFamily(itemID) or 0
+    local itemFamily = ns.GetItemBagFamily(itemID)
     for bagID = Enum.BagIndex.Backpack, NUM_TOTAL_BAG_FRAMES do
         local numFree, bagFamily = C_Container.GetContainerNumFreeSlots(bagID)
         if numFree > 0 and (not bagFamily or bagFamily == 0 or bit.band(itemFamily, bagFamily) ~= 0) then

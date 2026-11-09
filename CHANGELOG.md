@@ -12,6 +12,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Gold tooltip: the options choose the order of the characters (most gold first, least gold first
   or by name), for each character.
 
+### Fixed
+
+- Reserved bag slots: an empty bag that was put back out of a reserved slot no longer goes into a
+  profession bag that holds what the bag holds (e.g. a spare Herb Pouch into a Herb Pouch).
+
 ## [0.1.0] - 2026-11-07
 
 ### Added

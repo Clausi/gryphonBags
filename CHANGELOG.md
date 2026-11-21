@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-11-21
+
 ### Added
 
 - Gold tooltip: the options choose the order of the characters (most gold first, least gold first
@@ -50,5 +52,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Error `ADDON_ACTION_FORBIDDEN` (`PurchaseBankTab`) when opening the bank with a free bank tab: the
   addon no longer taints Blizzard's list of bag frames at login.
 
-[Unreleased]: https://github.com/Clausi/gryphonBags/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/Clausi/gryphonBags/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/Clausi/gryphonBags/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/Clausi/gryphonBags/releases/tag/v0.1.0

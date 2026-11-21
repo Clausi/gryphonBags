@@ -10,7 +10,8 @@ file only adds what is specific to GryphonBags.
 ## Target clients
 
 - **Forever** only (`## Interface: 16001`, `forever` branch of wow-ui-source), so there are no client
-  checks. `Core/Compat.lua` only holds `HasRealmNames()` for `Core/Names.lua`. Retail may follow later:
+  checks. `Core/Compat.lua` only holds `HasRealmNames()` for `Core/Names.lua` and `GetRuleset()`
+  (from the game rules; `GetRealmName()` returns "" since build 71037). Retail may follow later:
   extend `Core/Compat.lua` then (structure from GryphonMail), with `120105` in the `.toc`. Forever
   differs from Retail in many places.
 - Bag code on Forever: `Blizzard_UIPanels_Game/Mainline/ContainerFrame.lua` and `.xml`, plus the

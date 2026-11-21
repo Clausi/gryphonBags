@@ -19,19 +19,28 @@ local FACTION_LABELS = {
 
 -- Ruleset of a Forever realm name, nil without a realm. Forever has one mega server per ruleset,
 -- made up of many realms, and characters of one ruleset can land on different ones:
--- "CAMWOW US1 Realm 10 RP" and "CAMWOW US2 Realm 11 RP" are the same mega server. No API returns
--- the ruleset, so it is read from the name: the text after "Realm <number>" ("PvE", "PVP", "RP",
--- "RPPVP"), or the last word for names without that part ("Classic Beta PvE").
+-- "CAMWOW US1 Realm 10 RP" and "CAMWOW US2 Realm 11 RP" are the same mega server. The ruleset is
+-- the text after "Realm <number>" ("PvE", "PVP", "RP", "RPPVP"), or the last word for names
+-- without that part ("Classic Beta PvE"). Since Forever build 71037 the realm name is empty
+-- in-game; the ruleset comes from the game rules then (Compat.GetRuleset), the realm name only
+-- serves characters recorded before.
 local function GetRulesetName(realm)
-    if not realm then
+    if type(realm) ~= "string" or realm == "" then
         return nil
     end
-    return realm:match("Realm %d+%s+(.-)%s*$") or realm:match("(%S+)%s*$") or realm
+    local name = realm:match("Realm%s*%d+%s*(.-)%s*$") or realm:match("(%S+)%s*$")
+    return name ~= "" and name or nil
 end
 
--- Comparable form of GetRulesetName(): case and spaces are not consistent between realm names.
-local function GetRulesetKey(realm)
-    local name = GetRulesetName(realm)
+-- Ruleset of a stored character, from its stored ruleset (game rules) or else its realm name.
+local function GetRuleset(info)
+    return info.ruleset or GetRulesetName(info.realm)
+end
+
+-- Comparable form of GetRuleset(): case and spaces are not consistent between realm names
+-- ("RP PvP", "RPPVP" and the game rules' "RPPvP" are the same).
+local function GetRulesetKey(info)
+    local name = GetRuleset(info)
     return name and (name:lower():gsub("%s+", ""))
 end
 
@@ -112,12 +121,21 @@ local function RecordPlayer()
         return
     end
 
+    local stored = ns.db.characters[playerName]
+    -- One of the realms of the ruleset, see GetRulesetName(). Forever returns "" since build
+    -- 71037; the realm recorded before is kept then, it still names the ruleset.
+    local realm = GetRealmName()
+    if realm == "" then
+        realm = stored and stored.realm ~= "" and stored.realm or nil
+    end
+
     local _, classFile = UnitClass("player")
     ns.db.characters[playerName] = {
         class = classFile,
         faction = UnitFactionGroup("player"),
-        -- One of the realms of the ruleset, see GetRulesetName().
-        realm = GetRealmName(),
+        realm = realm,
+        -- From the game rules ("PvE", "PvP", "RP", "RPPvP", "HC"), see Compat.GetRuleset().
+        ruleset = ns.Compat.GetRuleset(),
         money = GetMoney(),
     }
 end
@@ -151,13 +169,14 @@ end
 -- Returns a new list of the known characters, sorted by name:
 --   { fullName = "Tor Donnerstein", class = "WARRIOR", faction = "Alliance", ruleset = "RP",
 --     money = 12345, isCurrent = bool, sharesGold = bool }
--- money is in copper, as of the character's last session.
+-- money is in copper, as of the character's last session. ruleset is nil for characters recorded
+-- without ruleset and with an empty realm name.
 -- sharesGold: gold can go between this character and the logged-in one (also true for that one).
 -- Trade and mail only work within the same faction and ruleset, whichever of its realms the
 -- characters are on.
 function Characters:GetCharacters()
     local player = playerName and ns.db.characters[playerName]
-    local playerRuleset = player and GetRulesetKey(player.realm)
+    local playerRuleset = player and GetRulesetKey(player)
     local characters = {}
     for _, fullName in ipairs(GetSortedNames()) do
         local info = ns.db.characters[fullName]
@@ -165,11 +184,11 @@ function Characters:GetCharacters()
             fullName = fullName,
             class = info.class,
             faction = info.faction,
-            ruleset = GetRulesetName(info.realm),
+            ruleset = GetRuleset(info),
             money = info.money,
             isCurrent = fullName == playerName,
             sharesGold = player ~= nil and info.faction == player.faction
-                and GetRulesetKey(info.realm) == playerRuleset,
+                and GetRulesetKey(info) == playerRuleset,
         }
     end
     return characters

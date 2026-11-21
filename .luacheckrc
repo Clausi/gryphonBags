@@ -26,6 +26,7 @@ read_globals = {
     "C_ClassColor",
     "C_AddOns",
     "C_Container",
+    "C_GameRules",
     "C_Item",
     "C_Timer",
     "ClearCursor",

@@ -20,6 +20,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Reserved bag slots: an empty bag that was put back out of a reserved slot no longer goes into a
   profession bag that holds what the bag holds (e.g. a spare Herb Pouch into a Herb Pouch).
+- Gold tooltip: characters are grouped by ruleset again. Since WoW Forever build 71037 the game no
+  longer returns the realm name, so the ruleset is now read from the game rules and stored per
+  character; the realm recorded before is no longer overwritten with an empty name.
 
 ## [0.1.0] - 2026-11-07
 

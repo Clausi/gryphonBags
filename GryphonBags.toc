@@ -5,7 +5,7 @@
 ## Notes-frFR: Ajoute des options supplémentaires aux sacs standard.
 ## Category: Inventory
 ## Author: cklausl
-## Version: 0.2.0
+## Version: 0.2.1
 ## SavedVariables: GryphonBagsDB
 ## SavedVariablesPerCharacter: GryphonBagsCharDB
 ## IconTexture: Interface\Icons\INV_Misc_Bag_08

@@ -24,6 +24,7 @@ Core\Compat.lua
 Core\Util.lua
 Core\Progress.lua
 Core\Names.lua
+Core\OptionsPanel.lua
 
 # Modules
 Modules\Characters.lua

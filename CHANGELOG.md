@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Options: after the GryphonBags options page was shown, changing a Blizzard setting such as an
+  action bar could taint Edit Mode (blocked actions and errors in the party frames). The page now
+  uses own controls instead of Blizzard's settings list and dropdowns: the order of the gold
+  tooltip is a row of radio buttons, the character to forget an own dropdown. The settings search
+  no longer finds the page's options.
+
 ## [0.2.0] - 2026-11-21
 
 ### Added

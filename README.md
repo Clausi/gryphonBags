@@ -14,7 +14,8 @@ A World of Warcraft addon that extends the default bags with additional options.
   of the same ruleset and faction, and the sum; hold Shift for all characters. Characters are
   recorded on login, and can be forgotten in the options or with `/gryphonbags chars remove`.
 - **Options:** automatic messages, own sort method, gold tooltip, known characters, on an own page
-  in the game options (Esc > Options > AddOns > GryphonBags).
+  in the game options (Esc > Options > AddOns > GryphonBags). The page uses own controls, so the
+  settings search of the game options does not find them.
 
 ## Supported clients
 
@@ -67,6 +68,7 @@ GryphonBags/
 │   ├── Util.lua           # Print/Debug helpers, debug memory output, defaults
 │   ├── Progress.lua       # Progress bar over the bag search box
 │   ├── Names.lua          # Character names (same as GryphonMail)
+│   ├── OptionsPanel.lua   # Own controls for the options page (same as GryphonMail)
 │   └── Main.lua           # Bootstrap: saved variables, module lifecycle, slash commands
 └── Modules/
     ├── Characters.lua     # Known characters of the account and their gold

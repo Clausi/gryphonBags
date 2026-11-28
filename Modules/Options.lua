@@ -2,73 +2,22 @@ local _, ns = ...
 local L = ns.L
 local Options = ns:RegisterModule("Options")
 
--- Options page in Blizzard's settings (Esc > Options > AddOns > GryphonBags) as a vertical list.
--- The settings stay in ns.db and ns.charDb; proxy settings read and write them there.
+-- Options page in Blizzard's settings (Esc > Options > AddOns > GryphonBags), built with own
+-- controls (Core/OptionsPanel.lua explains why). The settings stay in ns.db and ns.charDb; the
+-- controls read and write them there, so a change takes effect right away.
 
-local category
+local category, panel
 
--- Proxy setting variables must be unique among all settings of the game and addons.
-local function RegisterProxySetting(variable, varType, name, defaultValue, getValue, setValue)
-    return Settings.RegisterProxySetting(category, "GRYPHONBAGS_" .. variable, varType, name, defaultValue,
-        getValue, setValue)
-end
-
--- Known characters, like "/gryphonbags chars remove": a dropdown picks one, the button removes it.
--- The selection is not saved; "" is no selection.
-local function RegisterCharacterRemoval()
-    local Characters = ns.modules.Characters
-    local layout = SettingsPanel:GetLayout(category)
-    layout:AddInitializer(CreateSettingsListSectionHeaderInitializer(L["OPTIONS_CHARACTERS_HEADER"]))
-
-    local selected = ""
-    local selection = RegisterProxySetting("REMOVE_CHARACTER", Settings.VarType.String, L["OPTIONS_CHARACTER"], "",
-        function()
-            return selected
-        end,
-        function(value)
-            selected = value
-        end)
-
-    -- Called each time the dropdown opens, so it lists the characters stored at that moment.
-    local function GetOptions()
-        local container = Settings.CreateControlTextContainer()
-        container:Add("", L["OPTIONS_CHARACTER_NONE"])
-        for _, character in ipairs(Characters:GetCharacters()) do
-            if not character.isCurrent then
-                container:Add(character.fullName, Characters:FormatCharacter(character))
-            end
-        end
-        return container:GetData()
-    end
-    Settings.CreateDropdown(category, selection, GetOptions, L["OPTIONS_CHARACTER_TOOLTIP"])
-
-    -- No search tags (addSearchTags = false): tags added from addon code taint the initializer, the
-    -- settings search reads them for every initializer and carries the taint on to the search results.
-    -- On Forever, showing a Discord row there then calls the protected C_Discord.IsUserOAuthed.
-    layout:AddInitializer(CreateSettingsButtonInitializer(L["OPTIONS_CHARACTER_REMOVE"],
-        L["OPTIONS_CHARACTER_REMOVE_BUTTON"], function()
-        if selected == "" then
-            return
-        end
-        Characters:Remove(selected)
-        -- Also clears a selection that was removed by command in the meantime.
-        selection:SetValue("")
-    end, nil, false))
-end
-
-local function RegisterSettings()
-    local notifications = RegisterProxySetting("NOTIFICATIONS", Settings.VarType.Boolean,
-        L["OPTIONS_NOTIFICATIONS"], ns.charDefaults.notifications,
+local function AddGeneral()
+    panel:AddCheckbox(L["OPTIONS_NOTIFICATIONS"], L["OPTIONS_NOTIFICATIONS_TOOLTIP"],
         function()
             return ns.charDb.notifications
         end,
         function(value)
             ns.charDb.notifications = value
         end)
-    Settings.CreateCheckbox(category, notifications, L["OPTIONS_NOTIFICATIONS_TOOLTIP"])
 
-    local ownSort = RegisterProxySetting("OWN_SORT", Settings.VarType.Boolean,
-        L["OPTIONS_OWN_SORT"], ns.charDefaults.ownSort,
+    panel:AddCheckbox(L["OPTIONS_OWN_SORT"], L["OPTIONS_OWN_SORT_TOOLTIP"],
         function()
             return ns.charDb.ownSort
         end,
@@ -76,42 +25,79 @@ local function RegisterSettings()
             ns.charDb.ownSort = value
             ns.modules.Sort:Update()
         end)
-    Settings.CreateCheckbox(category, ownSort, L["OPTIONS_OWN_SORT_TOOLTIP"])
+end
 
-    local goldTooltip = RegisterProxySetting("GOLD_TOOLTIP", Settings.VarType.Boolean,
-        L["OPTIONS_GOLD_TOOLTIP"], ns.charDefaults.goldTooltip,
+local function AddGoldTooltip()
+    local SORT_ORDERS = ns.modules.GoldTooltip.SORT_ORDERS
+    panel:AddCheckbox(L["OPTIONS_GOLD_TOOLTIP"], L["OPTIONS_GOLD_TOOLTIP_TOOLTIP"],
         function()
             return ns.charDb.goldTooltip
         end,
         function(value)
             ns.charDb.goldTooltip = value
         end)
-    Settings.CreateCheckbox(category, goldTooltip, L["OPTIONS_GOLD_TOOLTIP_TOOLTIP"])
 
-    local goldTooltipSort = RegisterProxySetting("GOLD_TOOLTIP_SORT", Settings.VarType.String,
-        L["OPTIONS_GOLD_TOOLTIP_SORT"], ns.charDefaults.goldTooltipSort,
+    local choices = {}
+    for _, order in ipairs(SORT_ORDERS) do
+        choices[#choices + 1] = { value = order.key, text = L[order.label] }
+    end
+    panel:AddChoice(L["OPTIONS_GOLD_TOOLTIP_SORT"], L["OPTIONS_GOLD_TOOLTIP_SORT_TOOLTIP"], choices,
         function()
-            return ns.charDb.goldTooltipSort
+            -- Unknown saved values (e.g. from a later version) sort by the first order, see GoldTooltip.
+            for _, order in ipairs(SORT_ORDERS) do
+                if order.key == ns.charDb.goldTooltipSort then
+                    return order.key
+                end
+            end
+            return SORT_ORDERS[1].key
         end,
         function(value)
             ns.charDb.goldTooltipSort = value
         end)
-    local function GetSortOptions()
-        local container = Settings.CreateControlTextContainer()
-        for _, order in ipairs(ns.modules.GoldTooltip.SORT_ORDERS) do
-            container:Add(order.key, L[order.label])
-        end
-        return container:GetData()
-    end
-    Settings.CreateDropdown(category, goldTooltipSort, GetSortOptions, L["OPTIONS_GOLD_TOOLTIP_SORT_TOOLTIP"])
+end
 
-    RegisterCharacterRemoval()
+-- Known characters, like "/gryphonbags chars remove": a dropdown picks one, the button removes it.
+-- The selection is not saved; "" is no selection.
+local function AddCharacterRemoval()
+    local Characters = ns.modules.Characters
+    panel:AddHeader(L["OPTIONS_CHARACTERS_HEADER"])
+
+    local selected = ""
+    -- Called on every refresh, so it lists the characters stored at that moment.
+    local function GetChoices()
+        local choices = { { value = "", text = L["OPTIONS_CHARACTER_NONE"] } }
+        for _, character in ipairs(Characters:GetCharacters()) do
+            if not character.isCurrent then
+                choices[#choices + 1] = { value = character.fullName, text = Characters:FormatCharacter(character) }
+            end
+        end
+        return choices
+    end
+    panel:AddDropdown(L["OPTIONS_CHARACTER"], L["OPTIONS_CHARACTER_TOOLTIP"], GetChoices,
+        function()
+            -- A character removed by command in the meantime is no selection.
+            return ns.db.characters[selected] and selected or ""
+        end,
+        function(value)
+            selected = value
+        end)
+
+    panel:AddButton(L["OPTIONS_CHARACTER_REMOVE"], L["OPTIONS_CHARACTER_REMOVE_BUTTON"],
+        L["OPTIONS_CHARACTER_TOOLTIP"], function()
+            if selected ~= "" then
+                Characters:Remove(selected)
+            end
+            selected = ""
+            panel:Refresh()
+        end)
 end
 
 function Options:OnInitialize()
-    category = Settings.RegisterVerticalLayoutCategory(ns.name)
-    RegisterSettings()
-    Settings.RegisterAddOnCategory(category)
+    panel = ns.OptionsPanel.Create(ns.name)
+    AddGeneral()
+    AddGoldTooltip()
+    AddCharacterRemoval()
+    category = panel:Register()
 end
 
 -- "/gryphonbags options" opens the options page. Opening it from addon code is blocked in combat

@@ -55,13 +55,11 @@ read_globals = {
     "UpdateAddOnMemoryUsage",
 
     -- UI helpers
-    "CreateSettingsButtonInitializer",
-    "CreateSettingsListSectionHeaderInitializer",
+    "MinimalSliderWithSteppersMixin",
     "GameTooltip_AddNormalLine",
     "GameTooltip_Hide",
     "GameTooltip_SetTitle",
     "GetMoneyString",
-    "MinimalSliderWithSteppersMixin",
 
     -- Frames
     "BagItemAutoSortButton",
@@ -73,7 +71,6 @@ read_globals = {
     "GameTooltip",
     "SendMailFrame",
     "UIParent",
-    "SettingsPanel",
 
     -- Constants and global strings
     "GRAY_FONT_COLOR",

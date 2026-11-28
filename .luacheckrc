@@ -61,6 +61,7 @@ read_globals = {
     "GameTooltip_Hide",
     "GameTooltip_SetTitle",
     "GetMoneyString",
+    "MinimalSliderWithSteppersMixin",
 
     -- Frames
     "BagItemAutoSortButton",
@@ -71,6 +72,7 @@ read_globals = {
     "DEFAULT_CHAT_FRAME",
     "GameTooltip",
     "SendMailFrame",
+    "UIParent",
     "SettingsPanel",
 
     -- Constants and global strings
